@@ -1,0 +1,49 @@
+diff --git dist/game/data/scripts/ai/others/AdventureGuildsman/AdventureGuildsman.java dist/game/data/scripts/ai/others/AdventureGuildsman/AdventureGuildsman.java
+index d3d493ad5a9..79afdd62595 100644
+--- dist/game/data/scripts/ai/others/AdventureGuildsman/AdventureGuildsman.java
++++ dist/game/data/scripts/ai/others/AdventureGuildsman/AdventureGuildsman.java
+@@ -160,6 +160,7 @@ public class AdventureGuildsman extends Script
+ 			case "pccafe_help_lottery001.htm":
+ 			case "pccafe_help_lottery002.htm":
+ 			case "adventurer_agent_town_voucher_change.htm":
++			case "adventurer_agent_town_alegria.htm":
+ 			case "life_crystal_merge001.htm":
+ 			case "life_crystal_merge002.htm":
+ 			case "voucher_trader1001.htm":
+diff --git dist/game/data/scripts/ai/others/AdventureGuildsman/adventurer_agent_town_77001.htm dist/game/data/scripts/ai/others/AdventureGuildsman/adventurer_agent_town_77001.htm
+index 347434d1614..12c85497ecf 100644
+--- dist/game/data/scripts/ai/others/AdventureGuildsman/adventurer_agent_town_77001.htm
++++ dist/game/data/scripts/ai/others/AdventureGuildsman/adventurer_agent_town_77001.htm
+@@ -1,7 +1,8 @@
+ <html><body>Adventure Guildsman:<br>
+ The Adventure Guild gathers information on all adventures in all over the world and gives to adventurers. We're all-round information merchants. As you can imagine, we get real busy whenever events occur on the Aden Continent.<br>
+ Now that we're <font color="LEVEL">exchanging Adventurer's Marks and Seals</font> as well, we're even busier.<br>
+-<Button ALIGN=LEFT ICON="NORMAL" action="bypass -h Script CharacterBirthday">"I need to call Alegria."</Button>
++<!-- <Button ALIGN=LEFT ICON="NORMAL" action="bypass -h Script CharacterBirthday">"I need to call Alegria."</Button> -->
++<Button ALIGN=LEFT ICON="NORMAL" action="bypass Script AdventureGuildsman adventurer_agent_town_alegria.htm">"I need to call Alegria."</Button>
+ <Button ALIGN=LEFT ICON="NORMAL" action="bypass Script AdventureGuildsman adventurer_agent_town_voucher_change.htm">&quot;I want to exchange Adventurer's Marks and Seals.&quot;</Button>
+ <Button ALIGN=LEFT ICON="NORMAL" action="bypass Script AdventureGuildsman life_crystal_merge001.htm">&quot;I'd like to use a Life Crystal.&quot;</Button>
+ <Button ALIGN=LEFT ICON="NORMAL" action="bypass -h Script AdventureGuildsman quest_list">Quest info</Button>
+diff --git dist/game/data/scripts/ai/others/AdventureGuildsman/adventurer_agent_town_77001e.htm dist/game/data/scripts/ai/others/AdventureGuildsman/adventurer_agent_town_77001e.htm
+index 92bbdaddd7a..7dda580c7ad 100644
+--- dist/game/data/scripts/ai/others/AdventureGuildsman/adventurer_agent_town_77001e.htm
++++ dist/game/data/scripts/ai/others/AdventureGuildsman/adventurer_agent_town_77001e.htm
+@@ -1,4 +1,5 @@
+ <html><body>Adventure Guildsman:<br>
+ The Adventure Guild gathers information on all adventures in all over the world and gives to adventurers. We're all-round information merchants. As you can imagine, we get real busy whenever events occur on the Aden Continent.<br>
+-<Button ALIGN=LEFT ICON="NORMAL" action="bypass -h Script CharacterBirthday">"I need to call Alegria."</Button>
++<!-- <Button ALIGN=LEFT ICON="NORMAL" action="bypass -h Script CharacterBirthday">"I need to call Alegria."</Button> -->
++<Button ALIGN=LEFT ICON="NORMAL" action="bypass Script AdventureGuildsman adventurer_agent_town_alegria.htm">"I need to call Alegria."</Button>
+ </body></html>
+\ No newline at end of file
+diff --git dist/game/data/scripts/ai/others/AdventureGuildsman/adventurer_agent_town_alegria.htm dist/game/data/scripts/ai/others/AdventureGuildsman/adventurer_agent_town_alegria.htm
+new file mode 100644
+index 00000000000..360809e76c4
+--- /dev/null
++++ dist/game/data/scripts/ai/others/AdventureGuildsman/adventurer_agent_town_alegria.htm
+@@ -0,0 +1,5 @@
++<html><body>
++Hold on there, buddy. You can't receive a gift unless today's date is your actual birthday.<br>
++If you're not sure what day your birthday falls on, try using the <font color="LEVEL">/mybirthday</font> command.<br>
++Come back and see me on the yearly anniversary of your creation day, and we will celebrate like there's no tomorrow!
++</body></html>

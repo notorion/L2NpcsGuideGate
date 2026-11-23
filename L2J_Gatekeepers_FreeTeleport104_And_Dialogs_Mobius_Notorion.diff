@@ -1,0 +1,695 @@
+diff --git java/org/l2jmobius/gameserver/config/PlayerConfig.java java/org/l2jmobius/gameserver/config/PlayerConfig.java
+index b1aa78b..b5324ae 100644
+--- java/org/l2jmobius/gameserver/config/PlayerConfig.java
++++ java/org/l2jmobius/gameserver/config/PlayerConfig.java
+@@ -543,7 +543,7 @@ public class PlayerConfig
+ 		PETITIONING_ALLOWED = config.getBoolean("PetitioningAllowed", true);
+ 		MAX_PETITIONS_PER_PLAYER = config.getInt("MaxPetitionsPerPlayer", 5);
+ 		MAX_PETITIONS_PENDING = config.getInt("MaxPetitionsPending", 25);
+-		MAX_FREE_TELEPORT_LEVEL = config.getInt("MaxFreeTeleportLevel", 99);
++		MAX_FREE_TELEPORT_LEVEL = config.getInt("MaxFreeTeleportLevel", 104);
+ 		DELETE_DAYS = config.getInt("DeleteCharAfterDays", 1);
+ 		DISCONNECT_AFTER_DEATH = config.getBoolean("DisconnectAfterDeath", true);
+ 		PARTY_XP_CUTOFF_METHOD = Enum.valueOf(PartyExpType.class, config.getString("PartyXpCutoffMethod", "LEVEL").toUpperCase());
+diff --git dist/game/config/Player.ini dist/game/config/Player.ini
+index ece6c00..e923050 100644
+--- dist/game/config/Player.ini
++++ dist/game/config/Player.ini
+@@ -857,7 +857,7 @@ MaxPetitionsPending = 25
+ 
+ # Max player level for free teleporting around the world.
+ # Default: 99
+-MaxFreeTeleportLevel = 99
++MaxFreeTeleportLevel = 104
+ 
+ # Allow character deletion after days set below. To disallow character deletion, set this equal to 0.
+ # Default: 1
+diff --git dist/game/data/html/teleporter/30006-Q561-1.htm dist/game/data/html/teleporter/30006-Q561-1.htm
+index 7ea5eab..ca05b05 100644
+--- dist/game/data/html/teleporter/30006-Q561-1.htm
++++ dist/game/data/html/teleporter/30006-Q561-1.htm
+@@ -1,7 +1,7 @@
+ <html><body>Gatekeeper Milia:<br>
+ You have not started a quest yet. If you teleport to another place, you can't preceed with a mission properly.<br>
+ Even so, I need to confirm you really wish to go somewhere else. Can you check again, please?<br>
+-(Characters whose <font color="LEVEL">main class level is 1-99</font> can teleport for free.)<br>
++(You can teleport for free if your <font color="LEVEL">main class is Lv. 104 or lower</font>.)<br>
+ <Button ALIGN=LEFT ICON="TELEPORT" action="bypass npc_%objectId%_showTeleports">Teleport</Button>
+ <Button ALIGN=LEFT ICON="NORMAL" action="bypass npc_%objectId%_Link teleporter/30006-Q561-2.htm">Check other menus</Button>
+ <Button ALIGN=LEFT ICON="QUEST" action="bypass Script"><font color="LEVEL">Quest</font></Button>
+diff --git dist/game/data/html/teleporter/30006-Q561.htm dist/game/data/html/teleporter/30006-Q561.htm
+index a218e54..3a8a212 100644
+--- dist/game/data/html/teleporter/30006-Q561.htm
++++ dist/game/data/html/teleporter/30006-Q561.htm
+@@ -1,7 +1,7 @@
+ <html><body>Gatekeeper Milia:<br>
+ Welcome. I'm Gatekeeper Milia from Ivory Tower.<br>
+ Are you here on a mission from the Adeventure Guild? Then please start by clicking the <font color="LEVEL">[Quest]</font> button. I'll explain the mission and send you to your desired location.<br>
+-(Characters whose <font color="LEVEL">main class level is 1-99</font> can teleport for free.)<br>
++(You can teleport for free if your <font color="LEVEL">main class is Lv. 104 or lower</font>.)<br>
+ <Button ALIGN=LEFT ICON="TELEPORT" action="bypass npc_%objectId%_Link teleporter/30006-Q561-1.htm">Teleport</Button>
+ <Button ALIGN=LEFT ICON="NORMAL" action="bypass npc_%objectId%_Link teleporter/30006-Q561-2.htm">Check other menus</Button>
+ <Button ALIGN=LEFT ICON="QUEST" action="bypass Script"><font color="LEVEL">Quest</font></Button>
+diff --git dist/game/data/html/teleporter/30006.htm dist/game/data/html/teleporter/30006.htm
+index 319e5f9..85fc9d1 100644
+--- dist/game/data/html/teleporter/30006.htm
++++ dist/game/data/html/teleporter/30006.htm
+@@ -1,8 +1,6 @@
+ <html><body>Gatekeeper Milia:<br>
+ Greetings! I'm Milia, the Ivory Tower Gatekeeper. Previously I worked in Oren, but recently I've been redeployed here. Nice to meet you! What can I do for you?<br>
+-(Characters whose <font color="LEVEL">main class level is 1-99</font> can teleport for free.)<br>
++(You can teleport for free if your <font color="LEVEL">main class is Lv. 104 or lower</font>.)<br>
+ <Button ALIGN=LEFT ICON="TELEPORT" action="bypass -h npc_%objectId%_showTeleportList">Teleport</Button>
+-<Button ALIGN=LEFT ICON="NORMAL" action="bypass npc_%objectId%_Chat 1">Go to the Keucereus Alliance Base</Button>
+-<Button ALIGN=LEFT ICON="NORMAL" action="bypass npc_%objectId%_Chat 2">Ask about the wharf</Button>
+-<Button ALIGN=LEFT ICON="NORMAL" action="bypass -h npc_%objectId%_multisell 002">Exange Dimensional Diamonds</Button>
+-</body></html>
+\ No newline at end of file
++<Button ALIGN=LEFT ICON="NORMAL" action="bypass -h npc_%objectId%_multisell 002">Exchange Dimensional Diamonds</Button>
++</body></html>
+diff --git dist/game/data/html/teleporter/30059.htm dist/game/data/html/teleporter/30059.htm
+index 2416560..cf4871c 100644
+--- dist/game/data/html/teleporter/30059.htm
++++ dist/game/data/html/teleporter/30059.htm
+@@ -1,8 +1,7 @@
+ <html><body>Gatekeeper Trisha:<br>
+-It is very pleasant indeed to take a nice leisurely stroll while enjoying the nature! But if you are in a hurry and have no time to lose, don't hesitate to use our teleport service. So where would you like to go?
+-(Characters whose <font color="LEVEL">main class level is 1-99</font> can teleport for free.)<br>
++It is very pleasant indeed to take a nice leisurely stroll while enjoying the nature! But if you are in a hurry and have no time to lose, don't hesitate to use our teleport service. So where would you like to go?<br>
++(You can teleport for free if your <font color="LEVEL">main class is Lv. 104 or lower</font>.)<br>
+ <Button ALIGN=LEFT ICON="TELEPORT" action="bypass -h npc_%objectId%_showTeleportList">Teleport</Button>
+ <Button ALIGN=LEFT ICON="NORMAL" action="bypass -h npc_%objectId%_multisell 002">Exchange Dimensional Diamonds</Button>
+-<Button ALIGN=LEFT ICON="NORMAL" action="bypass -h Script TeleportToRaceTrack TELEPORT" msg="811;Monster Race Track">Teleport to the Arena and the Monster Race Track (Free)</Button>
+-<!--<Button ALIGN=LEFT ICON="NORMAL" action="bypass -h Script TeleportToFantasy TELEPORT" msg="811;Fantasy Isle">Teleport to the Fantasy Isle (free)</Button>-->
+-</body></html>
+\ No newline at end of file
++<Button ALIGN=LEFT ICON="NORMAL" action="bypass -h Script TeleportToRaceTrack TELEPORT" msg="811;Monster Race Track">Go to the Arena and Monster Race Track (for free)</Button>
++</body></html>
+diff --git dist/game/data/html/teleporter/30080.htm dist/game/data/html/teleporter/30080.htm
+index bfda2b6..31566cf 100644
+--- dist/game/data/html/teleporter/30080.htm
++++ dist/game/data/html/teleporter/30080.htm
+@@ -1,8 +1,7 @@
+ <html><body>Gatekeeper Clarissa:<br>
+ By the will of the Gods, we, the Gatekeepers, open doors to other dimensions and teleport everyone to their desired place. Do you want to travel somewhere?<br>
+-(Characters whose <font color="LEVEL">main class level is 1-99</font> can teleport for free.)<br>
++(You can teleport for free if your <font color="LEVEL">main class is Lv. 104 or lower</font>.)<br>
+ <Button ALIGN=LEFT ICON="TELEPORT" action="bypass -h npc_%objectId%_showTeleportList">Teleport</Button>
+ <Button ALIGN=LEFT ICON="NORMAL" action="bypass -h npc_%objectId%_multisell 002">Exchange Dimensional Diamonds</Button>
+-<Button ALIGN=LEFT ICON="NORMAL" action="bypass -h Script TeleportToRaceTrack TELEPORT" msg="811;Monster Race Track">Teleport to the Arena and the Monster Race Track (Free)</Button>
+-<!--<Button ALIGN=LEFT ICON="NORMAL" action="bypass -h Script TeleportToFantasy TELEPORT" msg="811;Fantasy Isle">Teleport to the Fantasy Isle (free)</Button>-->
+-</body></html>
+\ No newline at end of file
++<Button ALIGN=LEFT ICON="NORMAL" action="bypass -h Script TeleportToRaceTrack TELEPORT" msg="811;Monster Race Track">Go to the Arena and Monster Race Track (for free)</Button>
++</body></html>
+diff --git dist/game/data/html/teleporter/30134-Q562-1.htm dist/game/data/html/teleporter/30134-Q562-1.htm
+index c967642..249f910 100644
+--- dist/game/data/html/teleporter/30134-Q562-1.htm
++++ dist/game/data/html/teleporter/30134-Q562-1.htm
+@@ -1,7 +1,7 @@
+ <html><body>Teleport Device:<br>
+ You have not started a quest yet. If you teleport to another place, you can't preceed with a mission properly.<br>
+ If you still want to teleport to another place, I'll send you.<br>
+-(Characters whose <font color="LEVEL">main class level is 1-99</font> can teleport for free.)<br>
++(<font color="LEVEL">Main class characters of Lv. 104 and lower</font> can teleport for free.)<br>
+ <Button ALIGN=LEFT ICON="TELEPORT" action="bypass npc_%objectId%_showTeleports">Teleport</Button>
+ <Button ALIGN=LEFT ICON="NORMAL" action="bypass npc_%objectId%_Link teleporter/30134-Q562-2.htm">Check other menus</Button>
+ <Button ALIGN=LEFT ICON="QUEST" action="bypass Script"><font color="LEVEL">Quest</font></Button>
+diff --git dist/game/data/html/teleporter/30134-Q562-2.htm dist/game/data/html/teleporter/30134-Q562-2.htm
+index eda9325..535e3b1 100644
+--- dist/game/data/html/teleporter/30134-Q562-2.htm
++++ dist/game/data/html/teleporter/30134-Q562-2.htm
+@@ -1,6 +1,6 @@
+ <html><body>Teleport Device:<br>
+ The Dark Elf Village is currently under quarantine due to an epidemic. Survivors from the village who are not carrying the disease have been relocated to the Talking Island. We recommend that visitors avoid the Dark Elf village until further notice.<br>
+-(Characters whose <font color="LEVEL">main class level is 1-99</font> can teleport for free.)<br>
++(<font color="LEVEL">Main class characters of Lv. 104 and lower</font> can teleport for free.)<br>
+ <Button ALIGN=LEFT ICON="TELEPORT" action="bypass -h npc_%objectId%_showTeleportList">Teleport</Button>
+ <Button ALIGN=LEFT ICON="NORMAL" action="bypass -h npc_%objectId%_multisell 002">"I want to exchange some Dimensional Diamonds."</Button>
+ <Button ALIGN=LEFT ICON="RETURN" action="bypass npc_%objectId%_Link teleporter/30134-Q562.htm">Quest</Button>
+diff --git dist/game/data/html/teleporter/30134-Q562.htm dist/game/data/html/teleporter/30134-Q562.htm
+index 9c793f3..32bf4c5 100644
+--- dist/game/data/html/teleporter/30134-Q562.htm
++++ dist/game/data/html/teleporter/30134-Q562.htm
+@@ -1,6 +1,6 @@
+ <html><body>Teleport Device:<br>
+ If you to carry out a mission from the Adeventure Guild, click the <font color="LEVEL">[Quest]</font> button to start the mission and press the Teleport Menu button to go your selected location.<br>
+-(Characters whose <font color="LEVEL">main class level is 1-99</font> can teleport for free.)<br>
++(<font color="LEVEL">Main class characters of Lv. 104 and lower</font> can teleport for free.)<br>
+ <Button ALIGN=LEFT ICON="TELEPORT" action="bypass npc_%objectId%_Link teleporter/30134-Q562-1.htm">Teleport</Button>
+ <Button ALIGN=LEFT ICON="NORMAL" action="bypass npc_%objectId%_Link teleporter/30134-Q562-2.htm">Check other menus</Button>
+ <Button ALIGN=LEFT ICON="QUEST" action="bypass Script"><font color="LEVEL">Quest</font></Button>
+diff --git dist/game/data/html/teleporter/30134.htm dist/game/data/html/teleporter/30134.htm
+index 80c67df..c087577 100644
+--- dist/game/data/html/teleporter/30134.htm
++++ dist/game/data/html/teleporter/30134.htm
+@@ -1,6 +1,6 @@
+ <html><body>Teleport Device:<br>
+ The plague caused enormous damage to the Elven Village. Half of the houses are in ruins. Survivors fled to the Talking Island. It would be wiser not to linger for a long time in such a disastrous place.<br>
+-(Characters whose <font color="LEVEL">main class level is 1-99</font> can teleport for free.)<br>
++(<font color="LEVEL">Main class characters of Lv. 104 and lower</font> can teleport for free.)<br>
+ <Button ALIGN=LEFT ICON="TELEPORT" action="bypass -h npc_%objectId%_showTeleportList">Teleport</Button>
+ <Button ALIGN=LEFT ICON="NORMAL" action="bypass -h npc_%objectId%_multisell 002">Exchange Dimensional Diamonds</Button>
+ </body></html>
+\ No newline at end of file
+diff --git dist/game/data/html/teleporter/30146.htm dist/game/data/html/teleporter/30146.htm
+index 654e489..9fa50b7 100644
+--- dist/game/data/html/teleporter/30146.htm
++++ dist/game/data/html/teleporter/30146.htm
+@@ -1,9 +1,8 @@
+ <html><body>Gatekeeper Mintia:<br>
+-Hello, I'm Mintia.<br>
+-We've come back  here with the Mother Tree's Guardiants to find out why the Shadow of the Mother Tree has changed so drastically.<br>
++Hello there! My name's Mintia.<br>
++We came here with the Tree Guardians to investigate the changes in the shadow of the Mother Tree.<br>
+ Please be careful, it is very dangerous here.<br>
+-(Characters whose <font color="LEVEL">main class level is 1-99</font> can teleport for free.)<br>
++(You can teleport for free if your <font color="LEVEL">main class is Lv. 104 or lower</font>.)<br>
+ <Button ALIGN=LEFT ICON="TELEPORT" action="bypass -h npc_%objectId%_showTeleportList">Teleport</Button>
+ <Button ALIGN=LEFT ICON="NORMAL" action="bypass -h npc_%objectId%_multisell 002">Exchange Dimensional Diamonds</Button>
+-<!--<Button ALIGN=LEFT ICON="NORMAL" action="bypass -h Script TeleportToFantasy TELEPORT" msg="811;Fantasy Isle">Teleport to the Fantasy Isle (free)</Button>-->
+-</body></html>
+\ No newline at end of file
++</body></html>
+diff --git dist/game/data/html/teleporter/30162.htm dist/game/data/html/teleporter/30162.htm
+index ee77af0..f7cdbee 100644
+--- dist/game/data/html/teleporter/30162.htm
++++ dist/game/data/html/teleporter/30162.htm
+@@ -1,5 +1,4 @@
+ <html><body>Gatekeeper Karin:<br>
+-Have you finished your business? Do you still have items to buy or sell? If you are ready, I will open the gates of space and time for you.<br>
+-<Button ALIGN=LEFT ICON="TELEPORT" action="bypass npc_%objectId%_showTeleports">"I want to go to another floor."</Button>
+-<Button ALIGN=LEFT ICON="QUEST" action="bypass Script">Quest</Button>
+-</body></html>
+\ No newline at end of file
++Have you completed your task? Do you need to buy or sell something? When you are ready, I will teleport you to the next level.<br>
++<Button ALIGN=LEFT ICON="TELEPORT" action="bypass npc_%objectId%_showTeleports">Go to another floor</Button>
++</body></html>
+diff --git dist/game/data/html/teleporter/30177.htm dist/game/data/html/teleporter/30177.htm
+index 532ab9b..8b72397 100644
+--- dist/game/data/html/teleporter/30177.htm
++++ dist/game/data/html/teleporter/30177.htm
+@@ -1,9 +1,8 @@
+ <html><body>Gatekeeper Valentina:<br>
+ Greetings! I'm Gatekeeper Valentina. I can teleport you somewhere outside of the Ivory Tower. It is a common belief that our Tower is a den of madmen who think only of conquering the world. But there are some people here who are really trying to make the world a better place...<br>
+-Do you want to know more about the tower? What Gatekeeper do you need?<br>
+-(Characters whose <font color="LEVEL">main class level is 1-99</font> can teleport for free.)<br>
++But enough of that. Where do you want to go?<br>
++(You can teleport for free if your <font color="LEVEL">main class is Lv. 104 or lower</font>.)<br>
+ <Button ALIGN=LEFT ICON="TELEPORT" action="bypass -h npc_%objectId%_showTeleportList">Teleport</Button>
+ <Button ALIGN=LEFT ICON="NORMAL" action="bypass -h npc_%objectId%_multisell 002">Exchange Dimensional Diamonds</Button>
+-<Button ALIGN=LEFT ICON="NORMAL" action="bypass -h Script TeleportToRaceTrack TELEPORT" msg="811;Monster Race Track">Teleport to the Arena and the Monster Race Track (Free)</Button>
+-<!--<Button ALIGN=LEFT ICON="NORMAL" action="bypass -h Script TeleportToFantasy TELEPORT" msg="811;Fantasy Isle">Teleport to the Fantasy Isle (free)</Button>-->
+-</body></html>
+\ No newline at end of file
++<Button ALIGN=LEFT ICON="NORMAL" action="bypass -h Script TeleportToRaceTrack TELEPORT" msg="811;Monster Race Track">Go to the Arena and Monster Race Track (for free)</Button>
++</body></html>
+diff --git dist/game/data/html/teleporter/30233.htm dist/game/data/html/teleporter/30233.htm
+index d4c0fbc..9aaa200 100644
+--- dist/game/data/html/teleporter/30233.htm
++++ dist/game/data/html/teleporter/30233.htm
+@@ -1,9 +1,8 @@
+ <html><body>Gatekeeper Esmeralda:<br>
+-The outskirts of the Hunters Village are swarming with monsters. But if you use my teleport, you won't have to deal with them!<br>
+-Would you like to return to your home village? Maybe a friend is waiting for you somewhere? Or how about a friend is waiting for you somewhere? Or how about a vacation by the seaside? Wherever you want to go, we, Gatekeepers, will always be happy to help you.<br>
+-(Characters whose <font color="LEVEL">main class level is 1-99</font> can teleport for free.)<br>
++The outskirts of Hunters' Village are swarming with monsters. But if you use my teleport service, you won't have to deal with them!<br>
++Would you like to return to your home village? Maybe a friend is waiting for you somewhere? Or what about a vacation at the seaside? Wherever you want to go, we, Gatekeepers, will always be happy to help you.<br>
++(You can teleport for free if your <font color="LEVEL">main class is Lv. 104 or lower</font>.)<br>
+ <Button ALIGN=LEFT ICON="TELEPORT" action="bypass -h npc_%objectId%_showTeleportList">Teleport</Button>
+ <Button ALIGN=LEFT ICON="NORMAL" action="bypass -h npc_%objectId%_multisell 002">Exchange Dimensional Diamonds</Button>
+-<Button ALIGN=LEFT ICON="NORMAL" action="bypass -h Script TeleportToRaceTrack TELEPORT" msg="811;Monster Race Track">Teleport to the Arena and the Monster Race Track (Free)</Button>
+-<!--<Button ALIGN=LEFT ICON="NORMAL" action="bypass -h Script TeleportToFantasy TELEPORT" msg="811;Fantasy Isle">Teleport to the Fantasy Isle (free)</Button>-->
+-</body></html>
+\ No newline at end of file
++<Button ALIGN=LEFT ICON="NORMAL" action="bypass -h Script TeleportToRaceTrack TELEPORT" msg="811;Monster Race Track">Go to the Arena and Monster Race Track (for free)</Button>
++</body></html>
+diff --git dist/game/data/html/teleporter/30256-Q562-1.htm dist/game/data/html/teleporter/30256-Q562-1.htm
+index 7bd9d01..c56356b 100644
+--- dist/game/data/html/teleporter/30256-Q562-1.htm
++++ dist/game/data/html/teleporter/30256-Q562-1.htm
+@@ -1,7 +1,7 @@
+ <html><body>Gatekeeper Bella:<br>
+ You have not started a quest yet. If you teleport to another place, you can't preceed with a mission properly.<br>
+ If you still want to teleport to another place, I'll send you.<br>
+-(Characters whose <font color="LEVEL">main class level is 1-99</font> can teleport for free.)<br>
++(You can teleport for free if your <font color="LEVEL">main class is Lv. 104 or lower</font>.)<br>
+ <Button ALIGN=LEFT ICON="TELEPORT" action="bypass npc_%objectId%_showTeleports">Teleport</Button>
+ <Button ALIGN=LEFT ICON="NORMAL" action="bypass npc_%objectId%_Link teleporter/30256-Q562-2.htm">Check other menus</Button>
+ <Button ALIGN=LEFT ICON="QUEST" action="bypass Script"><font color="LEVEL">Quest</font></Button>
+diff --git dist/game/data/html/teleporter/30256-Q562-2.htm dist/game/data/html/teleporter/30256-Q562-2.htm
+index 953810c..a9258f5 100644
+--- dist/game/data/html/teleporter/30256-Q562-2.htm
++++ dist/game/data/html/teleporter/30256-Q562-2.htm
+@@ -1,7 +1,7 @@
+ <html><body>Gatekeeper Bella:<br>
+ I'm sorry for not being able to explain the other things I could do for you. Your mission from the Adventure Guild comes first.<br>
+ You can check the full menu after completing this mission.<br>
+-(Characters whose <font color="LEVEL">main class level is 1-99</font> can teleport for free.)<br>
++(You can teleport for free if your <font color="LEVEL">main class is Lv. 104 or lower</font>.)<br>
+ <Button ALIGN=LEFT ICON="TELEPORT" action="bypass -h npc_%objectId%_showTeleportList">Teleport</Button>
+ <Button ALIGN=LEFT ICON="NORMAL" action="bypass npc_%objectId%_Chat 1">"I want to teleport to the Keucereus Alliance Base"</Button>
+ <Button ALIGN=LEFT ICON="NORMAL" action="bypass -h npc_%objectId%_multisell 002">"I want to trade Dimensional Diamonds."</Button>
+diff --git dist/game/data/html/teleporter/30256-Q562.htm dist/game/data/html/teleporter/30256-Q562.htm
+index 8ddc5c1..0ae88fa 100644
+--- dist/game/data/html/teleporter/30256-Q562.htm
++++ dist/game/data/html/teleporter/30256-Q562.htm
+@@ -1,7 +1,7 @@
+ <html><body>Gatekeeper Bella:<br>
+ Welcome! Beautiful weather, isn't it? Perfect for teleporting!<br>
+ Oh my, are you here on a mission from the Adeventure Guild? Then can you click the <font color="LEVEL">[Quest]</font> button to proceed with the mission? I will give you a short explanation and send you to your desired location.<br>
+-(Characters whose <font color="LEVEL">main class level is 1-99</font> can teleport for free.)<br>
++(You can teleport for free if your <font color="LEVEL">main class is Lv. 104 or lower</font>.)<br>
+ <Button ALIGN=LEFT ICON="TELEPORT" action="bypass npc_%objectId%_Link teleporter/30256-Q562-1.htm">Teleport</Button>
+ <Button ALIGN=LEFT ICON="NORMAL" action="bypass npc_%objectId%_Link teleporter/30256-Q562-2.htm">Check other menus</Button>
+ <Button ALIGN=LEFT ICON="QUEST" action="bypass Script"><font color="LEVEL">Quest</font></Button>
+diff --git dist/game/data/html/teleporter/30256.htm dist/game/data/html/teleporter/30256.htm
+index b2c8a41..e37fab8 100644
+--- dist/game/data/html/teleporter/30256.htm
++++ dist/game/data/html/teleporter/30256.htm
+@@ -1,9 +1,7 @@
+ <html><body>Gatekeeper Bella:<br>
+-Welcome! The weather is wonderful, isn't it? Ideal conditions for teleporting. Where would you like to go?<br>
+-(Characters whose <font color="LEVEL">main class level is 1-99</font> can teleport for free.)<br>
++Welcome! The weather is wonderful, isn't it? Ideal conditions for teleporting. Where do you want to go?<br>
++(You can teleport for free if your <font color="LEVEL">main class is Lv. 104 or lower</font>.)<br>
+ <Button ALIGN=LEFT ICON="TELEPORT" action="bypass -h npc_%objectId%_showTeleportList">Teleport</Button>
+-<Button ALIGN=LEFT ICON="NORMAL" action="bypass npc_%objectId%_Chat 1">Go to Keucereus Alliance Base</Button>
+ <Button ALIGN=LEFT ICON="NORMAL" action="bypass -h npc_%objectId%_multisell 002">Exchange Dimensional Diamonds</Button>
+-<Button ALIGN=LEFT ICON="NORMAL" action="bypass -h Script TeleportToRaceTrack TELEPORT" msg="811;Monster Race Track">Teleport to the Arena and the Monster Race Track (Free)</Button>
+-<!--<Button ALIGN=LEFT ICON="NORMAL" action="bypass -h Script TeleportToFantasy TELEPORT" msg="811;Fantasy Isle">Teleport to the Fantasy Isle (free)</Button>-->
+-</body></html>
+\ No newline at end of file
++<Button ALIGN=LEFT ICON="NORMAL" action="bypass -h Script TeleportToRaceTrack TELEPORT" msg="811;Monster Race Track">Go to the Arena and Monster Race Track (for free)</Button>
++</body></html>
+diff --git dist/game/data/html/teleporter/30320.htm dist/game/data/html/teleporter/30320.htm
+index 0d0d484..f326c86 100644
+--- dist/game/data/html/teleporter/30320.htm
++++ dist/game/data/html/teleporter/30320.htm
+@@ -1,8 +1,7 @@
+ <html><body>Gatekeeper Richlin:<br>
+ What a wonderful day today! Where would you like to go? Trust me, your journey will be safe and fast!<br>
+-(Characters whose <font color="LEVEL">main class level is 1-99</font> can teleport for free.)<br>
++(You can teleport for free if your <font color="LEVEL">main class is Lv. 104 or lower</font>.)<br>
+ <Button ALIGN=LEFT ICON="TELEPORT" action="bypass -h npc_%objectId%_showTeleportList">Teleport</Button>
+ <Button ALIGN=LEFT ICON="NORMAL" action="bypass -h npc_%objectId%_multisell 002">Exchange Dimensional Diamonds</Button>
+-<Button ALIGN=LEFT ICON="NORMAL" action="bypass -h Script TeleportToRaceTrack TELEPORT" msg="811;Monster Race Track">Teleport to the Arena and the Monster Race Track (Free)</Button>
+-<!--<Button ALIGN=LEFT ICON="NORMAL" action="bypass -h Script TeleportToFantasy TELEPORT" msg="811;Fantasy Isle">Teleport to the Fantasy Isle (free)</Button>-->
+-</body></html>
+\ No newline at end of file
++<Button ALIGN=LEFT ICON="NORMAL" action="bypass -h Script TeleportToRaceTrack TELEPORT" msg="811;Monster Race Track">Go to the Arena and Monster Race Track (for free)</Button>
++</body></html>
+diff --git dist/game/data/html/teleporter/30540.htm dist/game/data/html/teleporter/30540.htm
+index bb233c6..4292cc2 100644
+--- dist/game/data/html/teleporter/30540.htm
++++ dist/game/data/html/teleporter/30540.htm
+@@ -1,6 +1,6 @@
+ <html><body>Teleport Device:<br>
+ There is no village but only ruins. The plague has killed almost all people of the Dwarven Village. Those who survived fled to the Talking Island. You shouldn't stay here for too long.<br>
+-(Characters whose <font color="LEVEL">main class level is 1-99</font> can teleport for free.)<br>
++(<font color="LEVEL">Main class characters of Lv. 104 and lower</font> can teleport for free.)<br>
+ <Button ALIGN=LEFT ICON="TELEPORT" action="bypass -h npc_%objectId%_showTeleportList">Teleport</Button>
+ <Button ALIGN=LEFT ICON="NORMAL" action="bypass -h npc_%objectId%_multisell 002">Exchange Dimensional Diamonds</Button>
+ </body></html>
+\ No newline at end of file
+diff --git dist/game/data/html/teleporter/30576.htm dist/game/data/html/teleporter/30576.htm
+index bdcc8f3..1f4e800 100644
+--- dist/game/data/html/teleporter/30576.htm
++++ dist/game/data/html/teleporter/30576.htm
+@@ -1,6 +1,6 @@
+ <html><body>Teleport Device:<br>
+ There is no village but only ruins. The plague has killed almost all people of the Orc Village. Those who survived fled to the Talking Island. You shouldn't stay here for too long.<br>
+-(Characters whose <font color="LEVEL">main class level is 1-99</font> can teleport for free.)<br>
++(<font color="LEVEL">Main class characters of Lv. 104 and lower</font> can teleport for free.)<br>
+ <Button ALIGN=LEFT ICON="TELEPORT" action="bypass -h npc_%objectId%_showTeleportList">Teleport</Button>
+ <Button ALIGN=LEFT ICON="NORMAL" action="bypass -h npc_%objectId%_multisell 002">Exchange Dimensional Diamonds</Button>
+ </body></html>
+\ No newline at end of file
+diff --git dist/game/data/html/teleporter/30716.htm dist/game/data/html/teleporter/30716.htm
+index 8a71943..c4a7dea 100644
+--- dist/game/data/html/teleporter/30716.htm
++++ dist/game/data/html/teleporter/30716.htm
+@@ -1,5 +1,4 @@
+ <html><body>Gatekeeper Cecile:<br>
+-How are your studies going? You must be happy to gain so much knowledge. Would you like to go to another floor?<br>
+-<Button ALIGN=LEFT ICON="TELEPORT" action="bypass npc_%objectId%_showTeleports">"Yes, that sounds good."</Button>
+-<Button ALIGN=LEFT ICON="QUEST" action="bypass Script">Quest</Button>
+-</body></html>
+\ No newline at end of file
++Did you like the tutorial? I hope, you are enthused. Do you want to teleport on the next level?<br>
++<Button ALIGN=LEFT ICON="TELEPORT" action="bypass npc_%objectId%_showTeleports">Go to another floor</Button>
++</body></html>
+diff --git dist/game/data/html/teleporter/30719.htm dist/game/data/html/teleporter/30719.htm
+index ed4bfae..7e056bc 100644
+--- dist/game/data/html/teleporter/30719.htm
++++ dist/game/data/html/teleporter/30719.htm
+@@ -1,7 +1,6 @@
+ <html><body>Gatekeeper Mariell:<br>
+-Hi there.<br>
+-The Dark Elf Guild is located on the 4th floor, the Elves of Light are on the 3rd, and the Human Mystics are downstairs. With a history stained by blood, don't you think it is encouraging to see the different races gathered in a small tower like this?<br>
+-Now, what can I do for you?<br>
+-<Button ALIGN=LEFT ICON="TELEPORT" action="bypass npc_%objectId%_showTeleports">"I want to go to another floor."</Button>
+-<Button ALIGN=LEFT ICON="QUEST" action="bypass Script">Quest</Button>
+-</body></html>
+\ No newline at end of file
++Let the stars lighten your path!<br>
++The guild of Dark Elves, the children of Shilen, is localed on the 4th floor. Human Mystics are on the 3th floor. It's amazing that such different people can cast away their hostility and live peacefully in the one small tower!<br>
++So how can I help you?<br>
++<Button ALIGN=LEFT ICON="TELEPORT" action="bypass npc_%objectId%_showTeleports">Go to another floor</Button>
++</body></html>
+diff --git dist/game/data/html/teleporter/30722.htm dist/game/data/html/teleporter/30722.htm
+index 497bea3..74fc278 100644
+--- dist/game/data/html/teleporter/30722.htm
++++ dist/game/data/html/teleporter/30722.htm
+@@ -1,6 +1,5 @@
+ <html><body>Gatekeeper Merian:<br>
+-This is as far up as you're allowed to go in the Ivory Tower. Heh, it's kind of hard to tell where you are because you've moved through gates... You're currently on the 4th floor; the Dark Elf Guild is located here. The floor above is not open to the general public.<br>
+-Which floor would you like to go down to?<br>
+-<Button ALIGN=LEFT ICON="TELEPORT" action="bypass npc_%objectId%_showTeleports">"I want to go to another floor."</Button>
+-<Button ALIGN=LEFT ICON="QUEST" action="bypass Script">Quest</Button>
+-</body></html>
+\ No newline at end of file
++Here is the entrance to the Ivory Tower. If you want you can see over the tower. Except for the 4th floor - there's the guild of Dark Elves who aren't fond of guests.<br>
++Where would you like to go?<br>
++<Button ALIGN=LEFT ICON="TELEPORT" action="bypass npc_%objectId%_showTeleports">Go to another floor</Button>
++</body></html>
+diff --git dist/game/data/html/teleporter/30848-Q561-Q562-1.htm dist/game/data/html/teleporter/30848-Q561-Q562-1.htm
+index 3c91ec3..412f4bc 100644
+--- dist/game/data/html/teleporter/30848-Q561-Q562-1.htm
++++ dist/game/data/html/teleporter/30848-Q561-Q562-1.htm
+@@ -1,7 +1,7 @@
+ <html><body>Gatekeeper Elisa:<br>
+ You have not started a quest yet. If you teleport to another place, you can't preceed with a mission properly.<br>
+ If you still want to teleport to another place, I'll send you.<br>
+-(Characters whose <font color="LEVEL">main class level is 1-99</font> can teleport for free.)<br>
++(You can teleport for free if your <font color="LEVEL">main class is Lv. 104 or lower</font>.)<br>
+ <Button ALIGN=LEFT ICON="TELEPORT" action="bypass npc_%objectId%_showTeleports">Teleport</Button>
+ <Button ALIGN=LEFT ICON="NORMAL" action="bypass npc_%objectId%_Link teleporter/30848-Q561-Q562-2.htm">Check other menus</Button>
+ <Button ALIGN=LEFT ICON="QUEST" action="bypass Script"><font color="LEVEL">Quest</font></Button>
+diff --git dist/game/data/html/teleporter/30848-Q561-Q562-2.htm dist/game/data/html/teleporter/30848-Q561-Q562-2.htm
+index bf89718..1589a43 100644
+--- dist/game/data/html/teleporter/30848-Q561-Q562-2.htm
++++ dist/game/data/html/teleporter/30848-Q561-Q562-2.htm
+@@ -1,7 +1,7 @@
+ <html><body>Gatekeeper Elisa:<br>
+ I'm sorry for not being able to explain the other things I could do for you. Your mission from the Adventure Guild comes first.<br>
+ You can check the full menu after completing this mission.<br>
+-(Characters whose <font color="LEVEL">main class level is 1-99</font> can teleport for free.)<br>
++(You can teleport for free if your <font color="LEVEL">main class is Lv. 104 or lower</font>.)<br>
+ <Button ALIGN=LEFT ICON="TELEPORT" action="bypass -h npc_%objectId%_showTeleportList">Teleport</Button>
+ <Button ALIGN=LEFT ICON="NORMAL" action="bypass -h npc_%objectId%_multisell 002">"I want to exchange some Dimensional Diamonds."</Button>
+ <Button ALIGN=LEFT ICON="NORMAL" action="bypass -h Script TeleportToRaceTrack TELEPORT" msg="811;Monster Race Track">"I want to go to the Arena and Monster Race Track for free."</Button>
+diff --git dist/game/data/html/teleporter/30848-Q561-Q562.htm dist/game/data/html/teleporter/30848-Q561-Q562.htm
+index 709d2e1..cd810d1 100644
+--- dist/game/data/html/teleporter/30848-Q561-Q562.htm
++++ dist/game/data/html/teleporter/30848-Q561-Q562.htm
+@@ -1,7 +1,7 @@
+ <html><body>Gatekeeper Elisa:<br>
+ I'm Gatekeeper Elisa, one of the many sent from the Ivory Tower to watch over the Gates of Time and Space<br>
+ Are you here on a mission from the Adeventure Guild? Then please start by clicking the <font color="LEVEL">[Quest]</font> button. I'll explain the mission and send you to your desired location.<br>
+-(Characters whose <font color="LEVEL">main class level is 1-99</font> can teleport for free.)<br>
++(You can teleport for free if your <font color="LEVEL">main class is Lv. 104 or lower</font>.)<br>
+ <Button ALIGN=LEFT ICON="TELEPORT" action="bypass npc_%objectId%_Link teleporter/30848-Q561-Q562-1.htm">Teleport</Button>
+ <Button ALIGN=LEFT ICON="NORMAL" action="bypass npc_%objectId%_Link teleporter/30848-Q561-Q562-2.htm">Check other menus</Button>
+ <Button ALIGN=LEFT ICON="QUEST" action="bypass Script"><font color="LEVEL">Quest</font></Button>
+diff --git dist/game/data/html/teleporter/30848.htm dist/game/data/html/teleporter/30848.htm
+index e5197af..76902ef 100644
+--- dist/game/data/html/teleporter/30848.htm
++++ dist/game/data/html/teleporter/30848.htm
+@@ -1,8 +1,7 @@
+ <html><body>Gatekeeper Elisa:<br>
+-Greetings! I'm Elisa, the Gatekeeper of the Ivory Tower. This place is a cultural, political and spiritual centre of Aden. Unfortunately, our guests are interested only in teleprots but not in the tower itself. It is a pity...<br>
+-(Characters whose <font color="LEVEL">main class level is 1-99</font> can teleport for free.)<br>
++Greetings! I'm Elisa, the Gatekeeper of the Ivory Tower. This place is a cultural, political, and spiritual center of Aden. Unfortunately, our guests are interested only in teleports and not in the tower itself. It is a pity...<br>
++(You can teleport for free if your <font color="LEVEL">main class is Lv. 104 or lower</font>.)<br>
+ <Button ALIGN=LEFT ICON="TELEPORT" action="bypass -h npc_%objectId%_showTeleportList">Teleport</Button>
+ <Button ALIGN=LEFT ICON="NORMAL" action="bypass -h npc_%objectId%_multisell 002">Exchange Dimensional Diamonds</Button>
+-<Button ALIGN=LEFT ICON="NORMAL" action="bypass -h Script TeleportToRaceTrack TELEPORT" msg="811;Monster Race Track">Teleport to the Arena and the Monster Race Track (Free)</Button>
+-<!--<Button ALIGN=LEFT ICON="NORMAL" action="bypass -h Script TeleportToFantasy TELEPORT" msg="811;Fantasy Isle">Teleport to the Fantasy Isle (free)</Button>-->
+-</body></html>
+\ No newline at end of file
++<Button ALIGN=LEFT ICON="NORMAL" action="bypass -h Script TeleportToRaceTrack TELEPORT" msg="811;Monster Race Track">Go to the Arena and Monster Race Track (for free)</Button>
++</body></html>
+diff --git dist/game/data/html/teleporter/30899.htm dist/game/data/html/teleporter/30899.htm
+index 3794dfd..123003a 100644
+--- dist/game/data/html/teleporter/30899.htm
++++ dist/game/data/html/teleporter/30899.htm
+@@ -1,9 +1,8 @@
+-<html><body>Gatekeeper Flauen<br>
+-Are you ready to leave? Let the stars guide your way.<br>
+-I hope you like it here in Heine. This city is considered one of the pearls of Aden. Ships crowding in the harbor at high tide, wind caressing beautiful houses and singing some sweet song ... I hope you've appreciated all this.<br>
+-(Characters whose <font color="LEVEL">main class level is 1-99</font> can teleport for free.)<br>
++<html><body>Gatekeeper Flauen:<br>
++Are you leaving us? Let the stars illuminate your path...<br>
++I hope you have enjoyed your stay in Heine. It is considered a jewel of Aden. Ships crowding the harbor at full tide, the wind caressing houses and singing a delightful song... I hope you truly appreciated all of this. Oh?<br>
++(You can teleport for free if your <font color="LEVEL">main class is Lv. 104 or lower</font>.)<br>
+ <Button ALIGN=LEFT ICON="TELEPORT" action="bypass -h npc_%objectId%_showTeleportList">Teleport</Button>
+ <Button ALIGN=LEFT ICON="NORMAL" action="bypass -h npc_%objectId%_multisell 002">Exchange Dimensional Diamonds</Button>
+-<Button ALIGN=LEFT ICON="NORMAL" action="bypass -h Script TeleportToRaceTrack TELEPORT" msg="811;Monster Race Track">Teleport to the Arena and the Monster Race Track (Free)</Button>
+-<!--<Button ALIGN=LEFT ICON="NORMAL" action="bypass -h Script TeleportToFantasy TELEPORT" msg="811;Fantasy Isle">Teleport to the Fantasy Isle (free)</Button>-->
++<Button ALIGN=LEFT ICON="NORMAL" action="bypass -h Script TeleportToRaceTrack TELEPORT" msg="811;Monster Race Track">Go to the Arena and Monster Race Track (for free)</Button>
+ </body></html>
+\ No newline at end of file
+diff --git dist/game/data/html/teleporter/31275.htm dist/game/data/html/teleporter/31275.htm
+index 144d305..a4bfc7f 100644
+--- dist/game/data/html/teleporter/31275.htm
++++ dist/game/data/html/teleporter/31275.htm
+@@ -1,9 +1,8 @@
+ <html><body>Gatekeeper Tatiana:<br>
+-Hello! I'm Tatiana, the Gatekeeper of Goddard. Teleports allow people to go for long distances in a moment. However, you have to study and practice for years to  master the art of teleportation.<br>
+-Well... Please tell me where you want to go!<br>
+-(Characters whose <font color="LEVEL">main class level is 1-99</font> can teleport for free.)<br>
++Hello! I'm Tatiana, the Gatekeeper of Goddard. Teleports allow people to go for long distances in a moment. However, you have to study and practice for years to master the art of teleportation.<br>
++Well! Please tell me where you want to go!<br>
++(You can teleport for free if your <font color="LEVEL">main class is Lv. 104 or lower</font>.)<br>
+ <Button ALIGN=LEFT ICON="TELEPORT" action="bypass -h npc_%objectId%_showTeleportList">Teleport</Button>
+ <Button ALIGN=LEFT ICON="NORMAL" action="bypass -h npc_%objectId%_multisell 002">Exchange Dimensional Diamonds</Button>
+-<Button ALIGN=LEFT ICON="NORMAL" action="bypass -h Script TeleportToRaceTrack TELEPORT" msg="811;Monster Race Track">Teleport to the Arena and the Monster Race Track (Free)</Button>
+-<!--<Button ALIGN=LEFT ICON="NORMAL" action="bypass -h Script TeleportToFantasy TELEPORT" msg="811;Fantasy Isle">Teleport to the Fantasy Isle (free)</Button>-->
+-</body></html>
+\ No newline at end of file
++<Button ALIGN=LEFT ICON="NORMAL" action="bypass -h Script TeleportToRaceTrack TELEPORT" msg="811;Monster Race Track">Go to the Arena and Monster Race Track (for free)</Button>
++</body></html>
+diff --git dist/game/data/html/teleporter/31320.htm dist/game/data/html/teleporter/31320.htm
+index 04098b1..af5408c 100644
+--- dist/game/data/html/teleporter/31320.htm
++++ dist/game/data/html/teleporter/31320.htm
+@@ -1,9 +1,8 @@
+ <html><body>Gatekeeper Ilyana:<br>
+-For a long time this city is considered one of the most important centers of art and trade. Even when it ceased to be the capital of Elmore, nothing changed. Every day, hundreds of customers use my services!<br>
++Since old times, this town has been considered one of the key centers of art and trade. Even when it ceased to be the capital of Elmore, it didn't change. Hundreds of clients use my services every day!<br>
+ What brought you to me?<br>
+-(Characters whose <font color="LEVEL">main class level is 1-99</font> can teleport for free.)<br>
++(You can teleport for free if your <font color="LEVEL">main class is Lv. 104 or lower</font>.)<br>
+ <Button ALIGN=LEFT ICON="TELEPORT" action="bypass -h npc_%objectId%_showTeleportList">Teleport</Button>
+ <Button ALIGN=LEFT ICON="NORMAL" action="bypass -h npc_%objectId%_multisell 002">Exchange Dimensional Diamonds</Button>
+-<Button ALIGN=LEFT ICON="NORMAL" action="bypass -h Script TeleportToRaceTrack TELEPORT" msg="811;Monster Race Track">Teleport to the Arena and the Monster Race Track (Free)</Button>
+-<!--<Button ALIGN=LEFT ICON="NORMAL" action="bypass -h Script TeleportToFantasy TELEPORT" msg="811;Fantasy Isle">Teleport to the Fantasy Isle (free)</Button>-->
+-</body></html>
+\ No newline at end of file
++<Button ALIGN=LEFT ICON="NORMAL" action="bypass -h Script TeleportToRaceTrack TELEPORT" msg="811;Monster Race Track">Go to the Arena and Monster Race Track (for free)</Button>
++</body></html>
+diff --git dist/game/data/html/teleporter/31698.htm dist/game/data/html/teleporter/31698.htm
+index 447a569..2ae23fc 100644
+--- dist/game/data/html/teleporter/31698.htm
++++ dist/game/data/html/teleporter/31698.htm
+@@ -1,7 +1,7 @@
+ <html><body>Gatekeeper Arisha:<br>
+ The Town of Rune isn't like any other Elmore town! Its sheer scale is so huge that town itself is comprised of two different levels. People can use dimensional gates to move about the city!<br>
+ So, where would you like to go? The library?<br>
+-(Characters whose <font color="LEVEL">main class level is 1-99</font> can teleport for free.)<br>
++(You can teleport for free if your <font color="LEVEL">main class is Lv. 104 or lower</font>.)<br>
+ <Button ALIGN=LEFT ICON="TELEPORT" action="bypass -h npc_%objectId%_showTeleportList">Teleport</Button>
+ <Button ALIGN=LEFT ICON="TELEPORT" action="bypass npc_%objectId%_showTeleports">Go to the Library.</Button>
+ <Button ALIGN=LEFT ICON="QUEST" action="bypass Script">Quest</Button>
+diff --git dist/game/data/html/teleporter/31699.htm dist/game/data/html/teleporter/31699.htm
+index f0c2a66..5d6d4d6 100644
+--- dist/game/data/html/teleporter/31699.htm
++++ dist/game/data/html/teleporter/31699.htm
+@@ -2,7 +2,7 @@
+ Oh, hi! I'm a gatekeeper like Arisha -- we've both been dispatched to help with teleportation within Rune in case of emergency, since it's such a big town.<br>
+ Did you see Arisha out there? I'm nice and cozy in here, but she ends up having to endure all kinds of weather. Poor Arisha. <br>
+ Oh, anyway. Did you need to go somewhere? Front of the temple?<br>
+-(Characters whose <font color="LEVEL">main class level is 1-99</font> can teleport for free.)<br>
++(You can teleport for free if your <font color="LEVEL">main class is Lv. 104 or lower</font>.)<br>
+ <Button ALIGN=LEFT ICON="TELEPORT" action="bypass -h npc_%objectId%_showTeleportList">Teleport</Button>
+ <Button ALIGN=LEFT ICON="TELEPORT" action="bypass npc_%objectId%_showTeleports">Teleport to the front of the Temple.</Button>
+ <Button ALIGN=LEFT ICON="QUEST" action="bypass Script">Quest</Button>
+diff --git dist/game/data/html/teleporter/31964.htm dist/game/data/html/teleporter/31964.htm
+index 413e2cc..5a616dc 100644
+--- dist/game/data/html/teleporter/31964.htm
++++ dist/game/data/html/teleporter/31964.htm
+@@ -1,9 +1,8 @@
+ <html><body>Gatekeeper Bilia:<br>
+-Greetings! I'm Bilia, the Schuttgart's Gatekeeper. With my help you'll be able to teleport wherever you want. It's the safest and the most convenient way to travel.<br>
++Hello! I am Bilia, the Gatekeeper of Schuttgart. With my help, you can use the portal and teleport wherever you need. It's convenient, safe and quick - the best way to travel.<br>
+ Just name the destination place, and you will appear there.<br>
+-(Characters whose <font color="LEVEL">main class level is 1-99</font> can teleport for free.)<br>
++(You can teleport for free if your <font color="LEVEL">main class is Lv. 104 or lower</font>.)<br>
+ <Button ALIGN=LEFT ICON="TELEPORT" action="bypass -h npc_%objectId%_showTeleportList">Teleport</Button>
+ <Button ALIGN=LEFT ICON="NORMAL" action="bypass -h npc_%objectId%_multisell 002">Exchange Dimensional Diamonds</Button>
+-<Button ALIGN=LEFT ICON="NORMAL" action="bypass -h Script TeleportToRaceTrack TELEPORT" msg="811;Monster Race Track">Teleport to the Arena and the Monster Race Track (Free)</Button>
+-<!--<Button ALIGN=LEFT ICON="NORMAL" action="bypass -h Script TeleportToFantasy TELEPORT" msg="811;Fantasy Isle">Teleport to the Fantasy Isle (free)</Button>-->
+-</body></html>
+\ No newline at end of file
++<Button ALIGN=LEFT ICON="NORMAL" action="bypass -h Script TeleportToRaceTrack TELEPORT" msg="811;Monster Race Track">Go to the Arena and Monster Race Track (for free)</Button>
++</body></html>
+diff --git dist/game/data/html/teleporter/32163.htm dist/game/data/html/teleporter/32163.htm
+index 37df22d..ee670f7 100644
+--- dist/game/data/html/teleporter/32163.htm
++++ dist/game/data/html/teleporter/32163.htm
+@@ -1,5 +1,5 @@
+ <html><body>Teleport Device:<br>
+-There is no village but only ruins. The plague has killed almost all people of Isle of Souls. Those who survived fled to the Talking Island. You shouldn't stay here for too long.<br>
+-(Characters whose <font color="LEVEL">main class level is 1-99</font> can teleport for free.)<br>
++There is no village but only ruins. Plague has killed almost all people of Isle of Souls. Those who survived fled to the Talking Island. You shouldn't stay here for too long.<br>
++(<font color="LEVEL">Main class characters of Lv. 104 and lower</font> can teleport for free.)<br>
+ <Button ALIGN=LEFT ICON="TELEPORT" action="bypass -h npc_%objectId%_showTeleportList">Teleport</Button>
+-</body></html>
+\ No newline at end of file
++</body></html>
+diff --git dist/game/data/html/teleporter/32189.htm dist/game/data/html/teleporter/32189.htm
+index cf00126..66ad65a 100644
+--- dist/game/data/html/teleporter/32189.htm
++++ dist/game/data/html/teleporter/32189.htm
+@@ -1,7 +1,7 @@
+ <html><body>Gatekeeper Largo:<br>
+ Welcome to the Kamael Harbor! There was a time when tons of goods and hundreds of travelers arrived here early. Now the amount of goods has noticeably decreased, but there are much more travelers.<br>
+ Do you want to go to the Kingdom of Aden?<br>
+-(Characters whose <font color="LEVEL">main class level is 1-99</font> can teleport for free.)<br>
++(You can teleport for free if your <font color="LEVEL">main class is Lv. 104 or lower</font>.)<br>
+ <Button ALIGN=LEFT ICON="TELEPORT" action="bypass npc_%objectId%_showTeleports">Teleport</Button>
+ <Button ALIGN=LEFT ICON="NORMAL" action="bypass -h npc_%objectId%_multisell 002">Exchange Dimensional Diamonds</Button>
+ <!--<Button ALIGN=LEFT ICON="NORMAL" action="bypass -h Script TeleportToFantasy TELEPORT" msg="811;Fantasy Isle">Teleport to the Fantasy Isle (free)</Button>-->
+diff --git dist/game/data/html/teleporter/32614.htm dist/game/data/html/teleporter/32614.htm
+index 784fc8e..6b32f04 100644
+--- dist/game/data/html/teleporter/32614.htm
++++ dist/game/data/html/teleporter/32614.htm
+@@ -2,7 +2,7 @@
+ This is the pier for Gludio Airships. Airships headed for the continent of Gracia also arrive and depart from here.<br>
+ We tap into a strong aura of power and depend on favorable winds to allow the Airships to travel such a far distance.<br>
+ If you're not ready to leave for Gracia yet, you'd best go back.<br>
+-(Characters whose <font color="LEVEL">main class level is 1-99</font> can teleport for free.)<br>
++(You can teleport for free if your <font color="LEVEL">main class is Lv. 104 or lower</font>.)<br>
+ <Button ALIGN=LEFT ICON="TELEPORT" action="bypass npc_%objectId%_showTeleports">"I want to teleport."</Button>
+ <Button ALIGN=LEFT ICON="NORMAL" action="bypass -h npc_%objectId%_teleport OTHER 0">"I want to go to Talking Island for free."</Button>
+ <Button ALIGN=LEFT ICON="QUEST" action="bypass -h talk_select">Quest</Button>
+diff --git dist/game/data/html/teleporter/32912.htm dist/game/data/html/teleporter/32912.htm
+index 3d26138..70ab440 100644
+--- dist/game/data/html/teleporter/32912.htm
++++ dist/game/data/html/teleporter/32912.htm
+@@ -1,9 +1,9 @@
+ <html><body>Gatekeeper Sookie:<br>
+-What is that look for? Never seen a cat before? If you need a teleport, you should talk to me.<br>
+-(If you are <font color="LEVEL">below level 99 and have the main class</font>, you can use the teleport for free.)<br>
++Welcome! What's wrong? Never seen a cat gatekeeper? Well, if you're ready to use the teleport, just let me know.<br>
++(<font color="LEVEL">Main class characters of Lv. 104 and lower</font> can teleport for free.)<br>
+ <Button ALIGN=LEFT ICON="TELEPORT" action="bypass -h npc_%objectId%_showTeleportList">Teleport</Button>
+-<Button ALIGN=LEFT ICON="NORMAL" action="bypass -h npc_%objectId%_teleport OTHER 0">"I was hoping to go to Arms of Timiniel...?"</Button>
++<Button ALIGN=LEFT ICON="NORMAL" action="bypass -h npc_%objectId%_teleport OTHER 0">Arms of Timiniel</Button>
+ <Button ALIGN=LEFT ICON="NORMAL" action="bypass -h npc_%objectId%_teleport OTHER 1">Garden of Genesis</Button>
+ <Button ALIGN=LEFT ICON="NORMAL" action="bypass -h npc_%objectId%_teleport OTHER 2">Prison of Darkness</Button>
+ <Button ALIGN=LEFT ICON="NORMAL" action="bypass npc_%objectId%_Chat 1">Orbis Temple</Button>
+-</body></html>
+\ No newline at end of file
++</body></html>
+diff --git dist/game/data/html/teleporter/33836.htm dist/game/data/html/teleporter/33836.htm
+index 8aec748..086ce6c 100644
+--- dist/game/data/html/teleporter/33836.htm
++++ dist/game/data/html/teleporter/33836.htm
+@@ -1,6 +1,6 @@
+ <html><body>Camille:<br>
+-Greetings. I am the Gainak Gatekeeper. What brings you to this dangerous place?<br>
+-Perhaps it's better I do not know. Whatever you want to leave here, tell me. Do you?<br>
+-(If your <font color="LEVEL">class is level 99 or below</font>, you can teleport for free.)<br>
++Welcome! I'm Camille, a gatekeeper of Gainak. What brings you in this dangerous place?<br>
++Let me know if you want to leave. Or maybe you're ready to get off right now?<br>
++(<font color="LEVEL">Main class characters of Lv. 104 and lower</font> can teleport for free.)<br>
+ <Button ALIGN=LEFT ICON="TELEPORT" action="bypass -h npc_%objectId%_showTeleportList">Teleport</Button>
+-</body></html>
+\ No newline at end of file
++</body></html>
+diff --git dist/game/data/html/teleporter/33948.htm dist/game/data/html/teleporter/33948.htm
+index f6aad9c..eed3d1e 100644
+--- dist/game/data/html/teleporter/33948.htm
++++ dist/game/data/html/teleporter/33948.htm
+@@ -1,7 +1,7 @@
+ <html><body>Gatekeeper Astiel:<br>
+-Hello. I am Astiel, the Gatekeeper of Ivory Tower. There was a real chaos before, but then, little by little, it all calmed down.<br>
++Hello, I am Astiel, the Gatekeeper of Ivory Tower. There was a real chaos before, but then, little by little, it all calmed down.<br>
+ How can I help you?<br>
+-(Characters whose <font color="LEVEL">main class level is 1-99</font> can teleport for free.)<br>
++(<font color="LEVEL">Main class characters of Lv. 104 and lower</font> can teleport for free.)<br>
+ <Button ALIGN=LEFT ICON="TELEPORT" action="bypass -h npc_%objectId%_showTeleportList">Teleport</Button>
+-<Button ALIGN=LEFT ICON="NORMAL" action="bypass -h npc_%objectId%_multisell 002">Exchange Dimensional Diamonds."</Button>
+-</body></html>
+\ No newline at end of file
++<Button ALIGN=LEFT ICON="NORMAL" action="bypass -h npc_%objectId%_multisell 002">Exchange Dimensional Diamonds</Button>
++</body></html>
+diff --git dist/game/data/html/teleporter/34188.htm dist/game/data/html/teleporter/34188.htm
+index dd8d3dd..8ef7675 100644
+--- dist/game/data/html/teleporter/34188.htm
++++ dist/game/data/html/teleporter/34188.htm
+@@ -1,5 +1,6 @@
+ <html><body>Gatekeeper Plie:<br>
+-For a long time, few knew about the Underground Gainak. They say that no one lived here before. Settlen has now opened the Mystic Tavern here, and slowly this place becomes populated. But still it is rather deserted here. But I really like deserted places.<br>
+-(Characters whose <font color="LEVEL">main class level is 1-99</font> can teleport for free.)<br>
++For a long time, few knew about the Underground Gainak. They say that no one lived here before. Settlers has now opened the Mystic Tavern here, and slowly this place becomes populated. But still it is rather deserted here. But I really like deserted places.<br>
++(<font color="LEVEL">Main class characters of Lv. 104 and lower</font> can teleport for free.)<br>
+ <Button ALIGN=LEFT ICON="TELEPORT" action="bypass -h npc_%objectId%_showTeleportList">Teleport</Button>
+-</body></html>
+\ No newline at end of file
++<Button ALIGN=LEFT ICON="NORMAL" action="bypass -h npc_%objectId%_multisell 002">Exchange Dimensional Diamonds</Button>
++</body></html>
+diff --git dist/game/data/teleporters/others/IvoryTower/Cecile.xml dist/game/data/teleporters/others/IvoryTower/Cecile.xml
+index a6e31c2..e8a1662 100644
+--- dist/game/data/teleporters/others/IvoryTower/Cecile.xml
++++ dist/game/data/teleporters/others/IvoryTower/Cecile.xml
+@@ -2,7 +2,7 @@
+ <list xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../xsd/teleporterData.xsd">
+ 	<npc id="30716"> <!-- Cecile -->
+ 		<teleport type="NORMAL">
+-			<location npcStringId="1010016" x="84915" y="15969" z="-4289" feeCount="0" /> <!-- Underground Shopping Area -->
++			<location npcStringId="1010016" x="85724" y="19194" z="-4288" feeCount="0" /> <!-- Underground Shopping Area -->
+ 			<location npcStringId="1010015" x="85399" y="16197" z="-3674" feeCount="0" /> <!-- 1st Floor Lobby -->
+ 			<location npcStringId="1010018" x="85399" y="16197" z="-2288" feeCount="0" /> <!-- 3rd Floor Elven Wizard Guild -->
+ 			<location npcStringId="1010019" x="85399" y="16197" z="-1771" feeCount="0" /> <!-- 4th Floor Dark Wizard Guild -->
+diff --git dist/game/data/teleporters/others/IvoryTower/Mariell.xml dist/game/data/teleporters/others/IvoryTower/Mariell.xml
+index a41ed1f..557f9a2 100644
+--- dist/game/data/teleporters/others/IvoryTower/Mariell.xml
++++ dist/game/data/teleporters/others/IvoryTower/Mariell.xml
+@@ -2,7 +2,7 @@
+ <list xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../xsd/teleporterData.xsd">
+ 	<npc id="30719"> <!-- Mariell -->
+ 		<teleport type="NORMAL">
+-			<location npcStringId="1010016" x="84915" y="15969" z="-4289" feeCount="0" /> <!-- Underground Shopping Area -->
++			<location npcStringId="1010016" x="85724" y="19194" z="-4288" feeCount="0" /> <!-- Underground Shopping Area -->
+ 			<location npcStringId="1010015" x="85399" y="16197" z="-3674" feeCount="0" /> <!-- 1st Floor Lobby -->
+ 			<location npcStringId="1010017" x="85399" y="16197" z="-2804" feeCount="0" /> <!-- 2nd Floor Human Wizard Guild -->
+ 			<location npcStringId="1010019" x="85399" y="16197" z="-1771" feeCount="0" /> <!-- 4th Floor Dark Wizard Guild -->
+diff --git dist/game/data/teleporters/others/IvoryTower/Merian.xml dist/game/data/teleporters/others/IvoryTower/Merian.xml
+index 1d95c62..2f1d7bd 100644
+--- dist/game/data/teleporters/others/IvoryTower/Merian.xml
++++ dist/game/data/teleporters/others/IvoryTower/Merian.xml
+@@ -2,7 +2,7 @@
+ <list xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../xsd/teleporterData.xsd">
+ 	<npc id="30722"> <!-- Merian -->
+ 		<teleport type="NORMAL">
+-			<location npcStringId="1010016" x="84915" y="15969" z="-4289" feeCount="0" /> <!-- Underground Shopping Area -->
++			<location npcStringId="1010016" x="85724" y="19194" z="-4288" feeCount="0" /> <!-- Underground Shopping Area -->
+ 			<location npcStringId="1010015" x="85399" y="16197" z="-3674" feeCount="0" /> <!-- 1st Floor Lobby -->
+ 			<location npcStringId="1010017" x="85399" y="16197" z="-2804" feeCount="0" /> <!-- 2nd Floor Human Wizard Guild -->
+ 			<location npcStringId="1010018" x="85399" y="16197" z="-2288" feeCount="0" /> <!-- 3rd Floor Elven Wizard Guild -->
+diff --git dist/game/data/teleporters/others/IvoryTower/Verona.xml dist/game/data/teleporters/others/IvoryTower/Verona.xml
+index fc90e92..09933df 100644
+--- dist/game/data/teleporters/others/IvoryTower/Verona.xml
++++ dist/game/data/teleporters/others/IvoryTower/Verona.xml
+@@ -2,7 +2,7 @@
+ <list xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../xsd/teleporterData.xsd">
+ 	<npc id="30727"> <!-- Verona -->
+ 		<teleport name="ivory_inside" type="OTHER">
+-			<location npcStringId="1010016" x="84915" y="15969" z="-4289" /> <!-- Underground Shopping Area -->
++			<location npcStringId="1010016" x="85724" y="19194" z="-4288" /> <!-- Underground Shopping Area -->
+ 			<location npcStringId="1010017" x="85399" y="16197" z="-2804" /> <!-- 2nd Floor Human Wizard Guild -->
+ 			<location npcStringId="1010018" x="85399" y="16197" z="-2288" /> <!-- 3rd Floor Elven Wizard Guild -->
+ 			<location npcStringId="1010019" x="85399" y="16197" z="-1771" /> <!-- 4th Floor Dark Wizard Guild -->

@@ -1,0 +1,180 @@
+diff --git dist/game/data/multisell/839.xml dist/game/data/multisell/839.xml
+index 1ecce0bd97b..67f9546be40 100644
+--- dist/game/data/multisell/839.xml
++++ dist/game/data/multisell/839.xml
+@@ -1,35 +1,19 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <list xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/multisell.xsd">
+ 	<npcs>
+-		<npc>33587</npc> <!-- Mentor Guide -->
++		<npc>33587</npc>
+ 	</npcs>
+-	<item>
+-		<ingredient id="33804" count="50000" /> <!-- Mentee's Mark -->
+-		<production id="80998" count="1" /> <!-- Pantheon's Museum's Time Stone -->
+-	</item>
+-	<item>
+-		<ingredient id="33804" count="50000" /> <!-- Mentee's Mark -->
+-		<production id="80996" count="1" /> <!-- Fioren's Crystal Prison's Time Stone -->
+-	</item>
+-	<item>
+-		<ingredient id="33804" count="50000" /> <!-- Mentee's Mark -->
+-		<production id="80997" count="1" /> <!-- Primeval Isle's Time Stone -->
+-	</item>
+-	<item>
+-		<ingredient id="33804" count="25000" /> <!-- Mentee's Mark -->
+-		<production id="81358" count="1" /> <!-- Abandoned Coal Mines' Time Stone -->
+-	</item>
+ 	<item>
+ 		<ingredient id="33804" count="300000" /> <!-- Mentee's Mark -->
+-		<production id="81839" count="1" /> <!-- Orb of Bloody Soul Lv.3 -->
++		<production id="81839" count="1" /> <!-- Bloody Soul Orb (Lv. 3) -->
+ 	</item>
+ 	<item>
+-		<ingredient id="33804" count="400000" /> <!-- Mentee's Mark -->
+-		<production id="81848" count="1" /> <!-- Orb of Abyss Lv.1 -->
++		<ingredient id="33804" count="300000" /> <!-- Mentee's Mark -->
++		<production id="81847" count="1" /> <!-- Orb of Abyss -->
+ 	</item>
+ 	<item>
+-		<ingredient id="33804" count="400000" /> <!-- Mentee's Mark -->
+-		<production id="81859" count="1" /> <!-- Orb of Darkness Lv.1 -->
++		<ingredient id="33804" count="300000" /> <!-- Mentee's Mark -->
++		<production id="81858" count="1" /> <!-- Orb of Darkness -->
+ 	</item>
+ 	<item>
+ 		<ingredient id="33804" count="100000" /> <!-- Mentee's Mark -->
+@@ -48,23 +32,23 @@
+ 		<production id="81350" count="1" /> <!-- Atlas' Earring -->
+ 	</item>
+ 	<item>
+-		<ingredient id="33804" count="10000" /> <!-- Mentee's Mark -->
++		<ingredient id="33804" count="100000" /> <!-- Mentee's Mark -->
+ 		<production id="81345" count="1" /> <!-- Expert's Mask -->
+ 	</item>
+-	<item>
+-		<ingredient id="33804" count="10000" /> <!-- Mentee's Mark -->
+-		<production id="81346" count="1" /> <!-- Scroll: Enchant Expert's Mask -->
+-	</item>
+ 	<item>
+ 		<ingredient id="33804" count="100000" /> <!-- Mentee's Mark -->
+-		<production id="81347" count="1" /> <!-- Shining Platinum Jewelry -->
++		<production id="81346" count="1" /> <!-- Scroll: Enchant Expert's Mask -->
+ 	</item>
+ 	<item>
+ 		<ingredient id="33804" count="50000" /> <!-- Mentee's Mark -->
+ 		<production id="48124" count="1" /> <!-- Fairy Agathion Charm -->
+ 	</item>
++	<item>
++		<ingredient id="33804" count="900000" /> <!-- Mentee's Mark -->
++		<production id="60752" count="1" /> <!-- Vitality Sustaining Rune (1-day) -->
++	</item>
+ 	<item>
+ 		<ingredient id="81351" count="1" /> <!-- Scroll: Enchant Atlas' Earring -->
+ 		<production id="33804" count="50000" /> <!-- Mentee's Mark -->
+ 	</item>
+-</list>
+\ No newline at end of file
++</list>
+diff --git dist/game/data/scripts/ai/others/MentorGuide/33587-02.htm dist/game/data/scripts/ai/others/MentorGuide/33587-02.htm
+index 6ad98a3456b..82c58fc2530 100644
+--- dist/game/data/scripts/ai/others/MentorGuide/33587-02.htm
++++ dist/game/data/scripts/ai/others/MentorGuide/33587-02.htm
+@@ -1,5 +1,6 @@
+ <html><body>Mentor Guide:<br>
+-This world is too harsh for newbies and heroes who have returned just recently. The purpose of mentoring is to help the weak in overcoming difficulties.<br>
+-The one who seeks help is called the mentee, and the one who assists them - the mentor.<br>
++New heroes and those who returned to the game after a long break could have a tough time trying to make progress on their own.<br>
++That's why there is a mentoring system that lets more experienced adventurers help newbies, it makes the training much easier.<br>
++New and returned heroes are called <font color="LEVEL">mentees</font>, and those who help them - <font color="LEVEL">mentors</font>.<br>
+ <Button ALIGN=LEFT ICON="RETURN" action="bypass Script MentorGuide 33587-01.htm">Back</Button>
+-</body></html>
+\ No newline at end of file
++</body></html>
+diff --git dist/game/data/scripts/ai/others/MentorGuide/33587-03.htm dist/game/data/scripts/ai/others/MentorGuide/33587-03.htm
+index 957f13951bf..68e5cfdf434 100644
+--- dist/game/data/scripts/ai/others/MentorGuide/33587-03.htm
++++ dist/game/data/scripts/ai/others/MentorGuide/33587-03.htm
+@@ -1,4 +1,4 @@
+-<html>><body>Mentor Guide:<br>
++<html><body>Mentor Guide:<br>
+ Here is information about items that can be obtained after finishing mentee's training and in exchange for Mentee's Marks.<br>
+ When you join a clan and complete a clan mission, you can receive Scroll: Enchant Atlas' Earring.<br>
+ <table width=280 border=1 bgcolor="111111">
+@@ -17,18 +17,21 @@ When you join a clan and complete a clan mission, you can receive Scroll: Enchan
+ </table><br><br><br>
+ <table width=280 border=1 bgcolor="111111">
+ <tr><td width=160 align=center><font color="LEVEL">Items for Mentee's Marks</font></td></tr>
++<tr><td width=160 align=center>Pantheon's Museum's Time Stone</td></tr>
++<tr><td width=160 align=center>Fioren's Crystal Prison's Time Stone</td></tr>
++<tr><td width=160 align=center>Jamoa's Camp's Time Stone</td></tr>
++<tr><td width=160 align=center>Abandoned Coal Mines' Time Stone</td></tr>
++<tr><td width=160 align=center>Orb of Bloody Soul</td></tr>
++<tr><td width=160 align=center>Orb of Abyss</td></tr>
++<tr><td width=160 align=center>Orb of Darkness</td></tr>
++<tr><td width=160 align=center>Belt of Seeker Captain</td></tr>
++<tr><td width=160 align=center>Scroll: Enchant Atlas' Earring</td></tr>
++<tr><td width=160 align=center>Atlas' Earring Upgrade Stone</td></tr>
++<tr><td width=160 align=center>Atlas' Earring</td></tr>
+ <tr><td width=160 align=center>Expert's Mask</td></tr>
+ <tr><td width=160 align=center>Scroll: Enchant Expert's Mask</td></tr>
+-<tr><td width=160 align=center>Freya's Ice Rose</td></tr>
+-<tr><td width=160 align=center>Emperor's Special Cocktail</td></tr>
+-<tr><td width=160 align=center>Honey Dark Beer</td></tr>
+-<tr><td width=160 align=center>Glowing Dragon's Attribute Potion (XP)</td></tr>
+-<tr><td width=160 align=center>Nevit's Gold Hourglass</td></tr>
+-<tr><td width=160 align=center>Enchant Scroll: Blessed Bracelet</td></tr>
+-<tr><td width=160 align=center>Blessed Scroll: Enchant Dragon Shirt</td></tr>
+-<tr><td width=160 align=center>Blessed Circlet Enchant Scroll</td></tr>
+ <tr><td width=160 align=center>Shining Platinum Jewelry</td></tr>
+-<tr><td width=160 align=center>Atlas' Earring</td></tr>
++<tr><td width=160 align=center>Agathion Charm: Fairy</td></tr>
+ </table><br>
+ <Button ALIGN=LEFT ICON="RETURN" action="bypass Script MentorGuide 33587-01.htm">Back</Button><br>
+-</body></html>
+\ No newline at end of file
++</body></html>
+diff --git dist/game/data/scripts/ai/others/MentorGuide/33587-05.htm dist/game/data/scripts/ai/others/MentorGuide/33587-05.htm
+index b71714d1414..3b59083afee 100644
+--- dist/game/data/scripts/ai/others/MentorGuide/33587-05.htm
++++ dist/game/data/scripts/ai/others/MentorGuide/33587-05.htm
+@@ -1,9 +1,7 @@
+ <html><body>Mentor Guide:<br>
+-You can offer another character to be their Mentor by opening the <font color="LEVEL">Friend Manager</font> and pressing the <font color="LEVEL">+ button</font> in the <font color="LEVEL">Mentorship</font> tab.<br>
+-
+-For example, after becoming a Mentor in the Mentorship tab you can choose characters that would be your Mentees.<br>
+-
+-Not every character can become a Mentor or a Mentee. A character can only become a <font color="LEVEL">Mentor</font> if they had already gone through <font color="LEVEL">Awakening</font> and reached <font color="LEVEL">Lv. 105</font>. A potential <font color="LEVEL">Mentee can't be higher that Lv.104</font>.<br1>
+-After a Mentee finishes their Mentor can't take on new Mentees for a day. After discontinuing Mentorship for some other reason, a Mentor can't take on new Mentees for two days.<br>
++You can offer another character to become your Mentee by opening the <font color="LEVEL">Friend Manager (Alt+Y)</font> and pressing the <font color="LEVEL">+</font> button in the <font color="LEVEL">Mentorship</font> tab.<br>
++For example, after becoming a Mentor, you can choose characters that would be your Mentees in the Mentorship tab.<br>
++Not every character can become a Mentor or a Mentee. A character can only become a <font color="LEVEL">Mentor</font> if they had already gone through the <font color="LEVEL">Awakening</font> and reached <font color="LEVEL">Lv. 105</font>. A potential <font color="LEVEL">Mentee can't be higher than Lv. 104</font>.<br>
++After a Mentee finishes the training, their Mentor can't take on new Mentees for a day. After discontinuing Mentorship for some other reason, a Mentor can't take on new Mentees for 2 days.<br>
+ <Button ALIGN=LEFT ICON="RETURN" action="bypass Script MentorGuide 33587-01.htm">Back</Button>
+-</body></html>
+\ No newline at end of file
++</body></html>
+diff --git dist/game/data/scripts/ai/others/MentorGuide/33587-07.htm dist/game/data/scripts/ai/others/MentorGuide/33587-07.htm
+index c131f96832b..480938a702f 100644
+--- dist/game/data/scripts/ai/others/MentorGuide/33587-07.htm
++++ dist/game/data/scripts/ai/others/MentorGuide/33587-07.htm
+@@ -1,11 +1,11 @@
+ <html><body>Mentor Guide:<br>
+ <font color="LEVEL">1. The mentor buff is called Mentee's Appreciation</font>.<br1>
+-It grants acquired XP/ SP +5% to the mentor. Applied only when mentee is logged in.<br>
++Mentee's Appreciation is a buff for mentors. It's effect is acquired XP/ SP +5%/ The buff is active only when the mentee is online.<br>
+ <font color="LEVEL">2. The mentee buff</font>.<br1>
+-A mentee taught by a mentor gets 4 buffs of Melody, 3 buffs of Sonatas and 1 buff of Harmony. The buffs are activated when the mentor is logged in and remain 5 min. after his/ her log out.<br>
+-<font color="LEVEL">3. The buff that summons mentor and enhances mentee's stats</font>.<br1>
+-Being a mentor you can teach your mentee useful skills.<br>
+-However, it's very difficult to teach somebody if you are too far away. And so the mentee is granted a skill that allows them to teleport their mentor to themselves.<br>
+-Mentee's Mentor Summon and Mentor's Art of Seduction can be found in the skill window, in the Clan/ Hero/ Mentorship Skills section.<br>
++Mentees can acquire the following effects: <font color="LEVEL">Musician's Melody - Mentor, Sonata Performance - Mentor, Mentor's Harmony</font>. These effects are active while the mentor is online and disappear in 5 min. if the mentor goes offline.<br>
++<font color="LEVEL">3. Mentee ability boost and Mentee's Mentor Summon</font><br1>
++Mentors can give a powerful <font color="LEVEL">Mentor's Art of Seduction</font> buff to their mentees using the skill of the same skill.<br>
++The mentor can use the skill only if the mentee is near him or her. Mentees have a special <font color="LEVEL">Mentee's Mentor Summon</font> skill to move to their mentors quickly.<br>
++You can find it in the Skills window, <font color="LEVEL">Clan/ Hero/ Mentor Skills</font> section.<br>
+ <Button ALIGN=LEFT ICON="RETURN" action="bypass Script MentorGuide 33587-01.htm">Back</Button>
+-</body></html>
+\ No newline at end of file
++</body></html>

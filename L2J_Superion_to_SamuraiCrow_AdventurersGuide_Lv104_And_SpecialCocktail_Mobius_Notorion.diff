@@ -1,0 +1,183 @@
+diff --git dist/game/data/multisell/323270001.xml dist/game/data/multisell/323270001.xml
+new file mode 100644
+index 00000000000..08670a4db17
+--- /dev/null
++++ dist/game/data/multisell/323270001.xml
+@@ -0,0 +1,10 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<list xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/multisell.xsd">
++	<npcs>
++		<npc>32327</npc> <!-- Adventurers' Guide -->
++	</npcs>
++	<item>
++		<ingredient id="57" count="500000" /> <!-- Adena -->
++		<production id="83254" count="1" /> <!-- Special Cocktail -->
++	</item>
++</list>
+diff --git dist/game/data/scripts/ai/others/AdventurersGuide/32327.html dist/game/data/scripts/ai/others/AdventurersGuide/32327.html
+index f34f9ea..a6b6414 100644
+--- dist/game/data/scripts/ai/others/AdventurersGuide/32327.html
++++ dist/game/data/scripts/ai/others/AdventurersGuide/32327.html
+@@ -1,9 +1,9 @@
+ <html><body>Adventurers' Guide:<br>
+-You had a long journey, hadn't you? I'm sure you are tired.<br>
+-I help everybody who fights evil!<br>
+-Thanks to the warriors such as yourself, our villagers could survive despite of all the darkness that had surrounded us.<br>
+-If you have unnecessary things that can be donated, I will give you high level buffs in exchange.<br>
+-<Button ALIGN=LEFT ICON="NORMAL" action="bypass Script AdventurersGuide guide-01.html"><font color="LEVEL">List of the buffs for characters of Lv. 1-99</font></Button>
+-<Button ALIGN=LEFT ICON="NORMAL" action="bypass Script AdventurersGuide guide-02.html"><font color="LEVEL">List of the donation buffs</font></Button>
++Greetings, traveler! How may I be of assistance?<br>
++My job is to offer what little assistance I can as you charge into all this endless intense fighting!<br>
++Even now, the monster attacks on this village grow stronger each day; it is only due to your tireless efforts that we have remained safe this long.<br>
++I can sell you <font color="LEVEL">Special Cocktail</font>, if you want. It will help you defeat the monsters.<br>
++<Button ALIGN=LEFT ICON="NORMAL" action="bypass Script AdventurersGuide guide-01.html"><font color="LEVEL">Buffs for characters below Lv. 105</font></Button>
++<Button ALIGN=LEFT ICON="NORMAL" action="bypass Script AdventurersGuide guide-09.html"><font color="LEVEL">Ask about Special Cocktail</font></Button>
+ <Button ALIGN=LEFT ICON="NORMAL" action="bypass -h Script AdventurersGuide weakenBreath">Weaken Shilen's Breath Lv. 3 or higher</Button>
+ </body></html>
+\ No newline at end of file
+diff --git dist/game/data/scripts/ai/others/AdventurersGuide/AdventurersGuide.java dist/game/data/scripts/ai/others/AdventurersGuide/AdventurersGuide.java
+index df2b6c0943a..eb6b1bc1f5b 100644
+--- dist/game/data/scripts/ai/others/AdventurersGuide/AdventurersGuide.java
++++ dist/game/data/scripts/ai/others/AdventurersGuide/AdventurersGuide.java
+@@ -59,7 +59,7 @@ public class AdventurersGuide extends Script
+ 	};
+ 	
+ 	// Misc
+-	private static final int MAX_LEVEL_BUFFS = 99;
++	private static final int MAX_LEVEL_BUFFS = 104;
+ 	private static final int MIN_LEVEL_PROTECTION = 40;
+ 	
+ 	private AdventurersGuide()
+@@ -83,6 +83,7 @@ public class AdventurersGuide extends Script
+ 			case "guide-06.html":
+ 			case "guide-07.html":
+ 			case "guide-08.html":
++			case "guide-09.html":
+ 			{
+ 				htmltext = event;
+ 				break;
+diff --git dist/game/data/scripts/ai/others/AdventurersGuide/guide-01.html dist/game/data/scripts/ai/others/AdventurersGuide/guide-01.html
+index 901a75a..8b5d3f7 100644
+--- dist/game/data/scripts/ai/others/AdventurersGuide/guide-01.html
++++ dist/game/data/scripts/ai/others/AdventurersGuide/guide-01.html
+@@ -1,9 +1,8 @@
+-<html><body>
+-The buff for beginners will be given <font color="LEVEL">for free</font> to adventurers of <font color="LEVEL">Lv. 99 and below</font>. The list of buffs that you can receive is as below:<br>
+-Horn Melody Lv.1 / Drum Melody Lv.1<br1>
+-Pipe Organ Melody Lv.1 / Guitar Melody Lv.1<br1>
+-Prevailing Sonata/Daring Sonata/Refreshing Sonata<br1>
+-Fantasia Harmony<br>
+-Get the buffs listed above.<br>
+-<Button ALIGN=LEFT ICON="NORMAL" action="bypass -h Script AdventurersGuide fantasia">"I'll take the buff."</Button>
++<html><body>Adventurers' Guide:<br>
++I give buffs for the characters of <font color="LEVEL">Lv. 1-105</font> for <font color="LEVEL">free</font>. Here is the list of available buffs.<br>
++<font color="LEVEL">- Fever Melody - Adventurer</font><br1>
++<font color="LEVEL">- Drumbeat of Serenity - Adventurer</font><br1>
++<font color="LEVEL">- Fantasia Harmony - Adventurer</font><br>
++Adventurers of Lv. 40 and below can also get the <font color="LEVEL">Blessing of Protection</font> buff.<br>
++<Button ALIGN=LEFT ICON="NORMAL" action="bypass -h Script AdventurersGuide fantasia">Get a buff</Button>
+ </body></html>
+\ No newline at end of file
+diff --git dist/game/data/scripts/ai/others/AdventurersGuide/guide-09.html dist/game/data/scripts/ai/others/AdventurersGuide/guide-09.html
+new file mode 100644
+index 00000000000..3f350ab2695
+--- /dev/null
++++ dist/game/data/scripts/ai/others/AdventurersGuide/guide-09.html
+@@ -0,0 +1,8 @@
++<html><body>Adventurers' Guide:<br>
++You want to buy a Special Cocktail?<br>
++It costs <font color="LEVEL">500,000 adena</font> and grants you the same buff that I provide, but you can use it whenever you want.<br>
++In other words, you wouldn't have to return to me whenever you need a pick-me-up.<br>
++What's more, Special Cocktail has no minimum level requirements and can be sold to other characters.<br>
++So, what do you think?<br>
++<Button ALIGN=LEFT ICON="NORMAL" action="bypass -h npc_%objectId%_multisell 323270001">Buy a Special Cocktail</Button>
++</body></html>
+diff --git dist/game/data/scripts/ai/others/AdventurersGuide/guide-noBuffs.html dist/game/data/scripts/ai/others/AdventurersGuide/guide-noBuffs.html
+index 37a4cb98e0f..d6c6316ebeb 100644
+--- dist/game/data/scripts/ai/others/AdventurersGuide/guide-noBuffs.html
++++ dist/game/data/scripts/ai/others/AdventurersGuide/guide-noBuffs.html
+@@ -1,3 +1,3 @@
+ <html><body>
+-Characters who are Lv. 99 or above cannot receive Newbie Buffs.
++Characters who are Lv. 105 or above cannot receive Newbie Buffs.
+ </body></html>
+\ No newline at end of file
+diff --git dist/game/data/stats/items/83200-83299.xml dist/game/data/stats/items/83200-83299.xml
+index 42d2e3b0064..e3df7b6ced9 100644
+--- dist/game/data/stats/items/83200-83299.xml
++++ dist/game/data/stats/items/83200-83299.xml
+@@ -822,6 +822,10 @@
+ 		<set name="is_sellable" val="false" />
+ 		<set name="is_freightable" val="true" />
+ 		<set name="is_stackable" val="true" />
++		<set name="handler" val="ItemSkills" />
++		<skills>
++			<skill id="39891" level="1" /> <!-- Special Cocktail -->
++		</skills>
+ 	</item>
+ 	<item id="83255" name="Special Cocktail" additionalName="Event" type="EtcItem">
+ 		<!-- For 60 min., applies the following effects: Fever Melody Lv. 1, Drumbeat of Serenity Lv. 1, and Fantasia Harmony Lv. 1. Note!. The effect remains after death. Cooldown: 10 sec. Cannot be used in the Olympiad. To remove the effect, press Alt + Left Mouse Button. -->
+@@ -833,6 +837,10 @@
+ 		<set name="is_dropable" val="false" />
+ 		<set name="is_sellable" val="false" />
+ 		<set name="is_stackable" val="true" />
++		<set name="handler" val="ItemSkills" />
++		<skills>
++			<skill id="39892" level="1" /> <!-- Special Cocktail -->
++		</skills>
+ 	</item>
+ 	<item id="83256" name="Special Cocktail" additionalName="Event" type="EtcItem">
+ 		<!-- For 60 min., applies the following effects: Fever Melody Lv. 1, Drumbeat of Serenity Lv. 1, and Fantasia Harmony Lv. 1. Note!. The effect remains after death. Cooldown: 10 sec. Cannot be used in the Olympiad. To remove the effect, press Alt + Left Mouse Button. -->
+@@ -844,6 +852,10 @@
+ 		<set name="is_dropable" val="false" />
+ 		<set name="is_sellable" val="false" />
+ 		<set name="is_stackable" val="true" />
++		<set name="handler" val="ItemSkills" />
++		<skills>
++			<skill id="39892" level="1" /> <!-- Special Cocktail -->
++		</skills>
+ 	</item>
+ 	<item id="83257" name="Silver Powder" additionalName="Event" type="EtcItem">
+ 		<!-- Powder from silver crystals. -->
+diff --git dist/game/data/stats/skills/62000-62099.xml dist/game/data/stats/skills/62000-62099.xml
+index 674ed11..f612a2e 100644
+--- dist/game/data/stats/skills/62000-62099.xml
++++ dist/game/data/stats/skills/62000-62099.xml
+@@ -782,11 +782,15 @@
+ 				<mode>PER</mode>
+ 			</effect>
+ 			<effect name="CriticalRate">
+-				<amount>150</amount>
++				<amount>100</amount>
+ 				<mode>PER</mode>
+ 			</effect>
+ 			<effect name="MagicCriticalRate">
+-				<amount>107</amount>
++				<amount>100</amount>
++				<mode>PER</mode>
++			</effect>
++			<effect name="PhysicalSkillCriticalRate">
++				<amount>100</amount>
+ 				<mode>PER</mode>
+ 			</effect>
+ 			<effect name="CriticalDamage">
+@@ -828,7 +832,7 @@
+ 		<magicLevel>1</magicLevel>
+ 		<conditions>
+ 			<condition name="OpNotAffectedBySkill">
+-				<skillId>39514</skillId> <!-- Fantasia Harmony - Wondrous Cocktail -->
++				<skillId>39771</skillId> <!-- Drumbeat of Serenity - Wondrous Cocktail -->
+ 			</condition>
+ 		</conditions>
+ 		<effects>
+@@ -923,6 +927,10 @@
+ 				<amount>90</amount>
+ 				<mode>PER</mode>
+ 			</effect>
++			<effect name="MpRegen">
++				<amount>90</amount>
++				<mode>PER</mode>
++			</effect>
+ 			<effect name="VampiricAttack">
+ 				<amount>9</amount>
+ 				<chance>80</chance>
